@@ -4,7 +4,8 @@ $(document).ready(function() {
 // Global Variables
 // ----------------------------------------------------------------------------------------------
 
-var wordOptions = ["New Zealand", "Canada", "United Kingdom", "Spain", "Turkey"];
+// var wordOptions = ["New Zealand", "Canada", "United Kingdom", "Spain", "Turkey"];
+var wordOptions = [];
 var usedOptions = [];
 var selectedWord = [];
 var lettersInWord = [];
@@ -30,6 +31,7 @@ var removeSpaces = function (char) {
   }
 
 setSelectedWord = () => {
+
     if (wordOptions.length === 0) {
         wordOptions = usedOptions;
         alert("Congratulations!!!!!!")
@@ -127,11 +129,6 @@ roundComplete = () => {
 
 }
 
-$.get("/options", function(data) {
-    console.log(data);
-})
-
-
 
 // Main Process
 // ----------------------------------------------------------------------------------------------
@@ -139,7 +136,16 @@ $.get("/options", function(data) {
 var currentURL = window.location.origin;
 console.log(currentURL);
 
-startGame();
+$.get("/options", function(data) {
+        for (var i=0; i<data.length; i++) {
+            console.log(data[i].countryName)
+            wordOptions.push(data[i].countryName)
+        }
+    }).then(function() {
+        startGame();
+});
+
+
 
 document.onkeyup = (event) => {
 
