@@ -17,10 +17,19 @@ var wins = 0;
 var losses = 0;
 var guesses = 10;
 var gameOver = false;
+var map;
 
 
 // Functions
 // ----------------------------------------------------------------------------------------------
+
+// initializes google map
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: -34.397, lng: 150.644},
+    zoom: 8
+  });
+}
 
 var removeSpaces = function (char) {
     if (char === spaceChar) {
@@ -135,6 +144,8 @@ roundComplete = () => {
 
 var currentURL = window.location.origin;
 console.log(currentURL);
+
+initMap();
 
 $.get("/options", function(data) {
         for (var i=0; i<data.length; i++) {
